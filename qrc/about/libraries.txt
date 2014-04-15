@@ -1,0 +1,5 @@
+3rd libraries:
+* Qt - http://qt-project.org/
+
+Icons:
+* http://openiconlibrary.sourceforge.net/

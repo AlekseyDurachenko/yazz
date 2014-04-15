@@ -1,0 +1,3 @@
+yazz - The yandex.disk sync tool.
+
+Homepage: https://github.com/AlekseyDurachenko/yazz
