@@ -32,12 +32,16 @@ INCLUDEPATH    +=                                           \
     src                                                     \
 
 HEADERS        +=                                           \
-    src/consts.h                                            \
-    src/global.h                                            \
+    src/webdav/qtwebdav.h                                   \
     src/caboutdialog.h                                      \
+    src/ctest.h                                             \
+    src/global.h                                            \
+    src/consts.h                                            \
 
 SOURCES        +=                                           \
+    src/webdav/qtwebdav.cpp                                 \
     src/caboutdialog.cpp                                    \
+    src/ctest.cpp                                           \
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \

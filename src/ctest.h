@@ -12,16 +12,23 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#include "global.h"
-#include "ctest.h"
-#include <QApplication>
-#include <QDebug>
+#ifndef CTEST_H
+#define CTEST_H
 
-int main(int argc, char *argv[])
+#include <QObject>
+#include <QNetworkReply>
+
+class CTest : public QObject
 {
-    QApplication app(argc, argv);
+    Q_OBJECT
+public:
+    explicit CTest(QObject *parent = 0);
+signals:
+public slots:
+private slots:
+    void finished();
+private:
+    QNetworkReply *m_reply;
+};
 
-    CTest test;
-
-    return app.exec();
-}
+#endif // CTEST_H
