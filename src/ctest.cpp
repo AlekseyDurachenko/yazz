@@ -32,9 +32,11 @@ CTest::CTest(QObject *parent) : QObject(parent)
     webdav->setHostname(hostname);
     webdav->setUsername(username);
     webdav->setPassword(password);
-    m_reply = webdav->remove("mydir");
-    connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
-    m_reply = webdav->mkdir("mydir/my2");
+    //m_reply = webdav->remove("mydir");
+    //connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
+    //m_reply = webdav->mkdir("mydir/my2");
+    //connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
+    m_reply = webdav->copy("gori.jpg", "hren.jpg");
     connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
 }
 

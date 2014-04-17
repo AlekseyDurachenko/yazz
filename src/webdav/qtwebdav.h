@@ -46,6 +46,7 @@ public:
 
     QNetworkReply *mkdir(const QString &path);
     QNetworkReply *remove(const QString &path);
+    QNetworkReply *copy(const QString &from, const QString &to, bool overwrite = true);
 signals:
     void authFailed();
 public slots:
