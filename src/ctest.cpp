@@ -36,7 +36,9 @@ CTest::CTest(QObject *parent) : QObject(parent)
     //connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
     //m_reply = webdav->mkdir("mydir/my2");
     //connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
-    m_reply = webdav->copy("gori.jpg", "hren.jpg");
+    //m_reply = webdav->copy("gori.jpg", "hren.jpg");
+    //connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
+    m_reply = webdav->move("hren.jpg", "hrenXXX.jpg");
     connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
 }
 

@@ -127,6 +127,22 @@ QNetworkReply *QtWebDav::copy(const QString &from, const QString &to, bool overw
     return sendCustomRequest(request, "COPY");
 }
 
+QNetworkReply *QtWebDav::move(const QString &from, const QString &to, bool overwrite)
+{
+    QUrl dstURL(createBaseURL());
+    dstURL.setPath(m_rootPath + to);
+
+    QUrl reqURL(createBaseURL());
+    reqURL.setPath(m_rootPath + from);
+
+    QNetworkRequest request(reqURL);
+    request.setRawHeader("Destination", dstURL.toString().toUtf8());
+    request.setRawHeader("Depth", "infinity");
+    request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
+
+    return sendCustomRequest(request, "MOVE");
+}
+
 void QtWebDav::authentication(QNetworkReply *reply, QAuthenticator *auth)
 {
     if (reply == m_authReply)
