@@ -143,6 +143,27 @@ QNetworkReply *QtWebDav::move(const QString &from, const QString &to, bool overw
     return sendCustomRequest(request, "MOVE");
 }
 
+QNetworkReply *QtWebDav::put(const QString &path, QIODevice *data)
+{
+    QUrl reqURL(createBaseURL());
+    reqURL.setPath(m_rootPath + path);
+    QNetworkRequest request;
+    request.setUrl(reqURL);
+
+    return QNetworkAccessManager::put(request, data);
+}
+
+QNetworkReply *QtWebDav::get(const QString &path, QIODevice *data)
+{
+    QUrl reqURL(createBaseURL());
+    reqURL.setPath(m_rootPath + path);
+
+    QNetworkReply *reply = QNetworkAccessManager::get(QNetworkRequest(reqURL));
+    new QtNetworkReplyProxy(reply, data, this);
+
+    return reply;
+}
+
 void QtWebDav::authentication(QNetworkReply *reply, QAuthenticator *auth)
 {
     if (reply == m_authReply)

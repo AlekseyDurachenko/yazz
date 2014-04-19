@@ -48,6 +48,9 @@ public:
     QNetworkReply *remove(const QString &path);
     QNetworkReply *copy(const QString &from, const QString &to, bool overwrite = true);
     QNetworkReply *move(const QString &from, const QString &to, bool overwrite = true);
+
+    QNetworkReply *put(const QString &path, QIODevice *data = 0);
+    QNetworkReply *get(const QString &path, QIODevice *data = 0);
 signals:
     void authFailed();
 public slots:
