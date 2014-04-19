@@ -168,7 +168,19 @@ QNetworkReply *QtWebDav::list(const QString &path, int depth)
     request.setRawHeader("Depth",
             ((depth == -1) ? QString("infinity").toUtf8() : QString::number(depth).toUtf8()));
 
-    return sendCustomRequest(request, "PROPFIND", QByteArray());
+    QByteArray data =
+            "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
+            "<D:propfind xmlns:D=\"DAV:\">  "
+            "  <D:prop>                     "
+            "    <D:creationdate/>          "
+            "    <D:getlastmodified/>       "
+            "    <D:getcontentlength/>      "
+            "    <D:resourcetype/>          "
+            "    <D:displayname/>           "
+            "  </D:prop>                    "
+            "</D:propfind>                  ";
+
+    return sendCustomRequest(request, "PROPFIND", data);
 }
 
 QNetworkReply *QtWebDav::sendCustomRequest(const QNetworkRequest &request,
