@@ -100,44 +100,30 @@ void QtWebDav::setPassword(const QString &password)
 
 QNetworkReply *QtWebDav::mkdir(const QString &path)
 {
-    QUrl reqURL(createBaseURL());
-    reqURL.setPath(m_rootPath + path);
-    return QNetworkAccessManager::sendCustomRequest(QNetworkRequest(reqURL), "MKCOL");
+    return QNetworkAccessManager::sendCustomRequest(QNetworkRequest(createURL(path)), "MKCOL");
 }
 
 QNetworkReply *QtWebDav::remove(const QString &path)
 {
-    QUrl reqURL(createBaseURL());
-    reqURL.setPath(m_rootPath + path);
-    return QNetworkAccessManager::sendCustomRequest(QNetworkRequest(reqURL), "DELETE");
+    return QNetworkAccessManager::sendCustomRequest(QNetworkRequest(createURL(path)), "DELETE");
 }
 
-QNetworkReply *QtWebDav::copy(const QString &from, const QString &to, bool overwrite)
+QNetworkReply *QtWebDav::copy(const QString &from,
+        const QString &to, bool overwrite)
 {
-    QUrl dstURL(createBaseURL());
-    dstURL.setPath(m_rootPath + to);
-
-    QUrl reqURL(createBaseURL());
-    reqURL.setPath(m_rootPath + from);
-
-    QNetworkRequest request(reqURL);
-    request.setRawHeader("Destination", dstURL.toString().toUtf8());
+    QNetworkRequest request(createURL(from));
+    request.setRawHeader("Destination", createURL(to).toString().toUtf8());
     request.setRawHeader("Depth", "infinity");
     request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
 
     return QNetworkAccessManager::sendCustomRequest(request, "COPY");
 }
 
-QNetworkReply *QtWebDav::move(const QString &from, const QString &to, bool overwrite)
+QNetworkReply *QtWebDav::move(const QString &from,
+        const QString &to, bool overwrite)
 {
-    QUrl dstURL(createBaseURL());
-    dstURL.setPath(m_rootPath + to);
-
-    QUrl reqURL(createBaseURL());
-    reqURL.setPath(m_rootPath + from);
-
-    QNetworkRequest request(reqURL);
-    request.setRawHeader("Destination", dstURL.toString().toUtf8());
+    QNetworkRequest request(createURL(from));
+    request.setRawHeader("Destination", createURL(to).toString().toUtf8());
     request.setRawHeader("Depth", "infinity");
     request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
 
@@ -146,31 +132,22 @@ QNetworkReply *QtWebDav::move(const QString &from, const QString &to, bool overw
 
 QNetworkReply *QtWebDav::put(const QString &path, QIODevice *data)
 {
-    QUrl reqURL(createBaseURL());
-    reqURL.setPath(m_rootPath + path);
-    QNetworkRequest request;
-    request.setUrl(reqURL);
+    QNetworkRequest request(createURL(path));
+    // TODO: fill some fileds (?)
 
     return QNetworkAccessManager::put(request, data);
 }
 
 QNetworkReply *QtWebDav::get(const QString &path, QIODevice *data)
 {
-    QUrl reqURL(createBaseURL());
-    reqURL.setPath(m_rootPath + path);
-
-    QNetworkReply *reply = QNetworkAccessManager::get(QNetworkRequest(reqURL));
-    new QtNetworkReplyProxy(reply, data, this);
-
+    QNetworkReply *reply = QNetworkAccessManager::get(QNetworkRequest(createURL(path)));
+    new QtNetworkReplyProxy(reply, data, this);    
     return reply;
 }
 
 QNetworkReply *QtWebDav::getFreeSpace()
 {
-    QUrl reqURL(createBaseURL());
-    reqURL.setPath(m_rootPath);
-
-    QNetworkRequest request(reqURL);
+    QNetworkRequest request(createBaseURL());
     request.setRawHeader("Depth", "0");
 
     QByteArray data =
@@ -233,4 +210,11 @@ QUrl QtWebDav::createBaseURL() const
     baseURL.setPort(m_port);
 
     return baseURL;
+}
+
+QUrl QtWebDav::createURL(const QString &path) const
+{
+    QUrl url(createBaseURL());
+    url.setPath(m_rootPath + path);
+    return url;
 }

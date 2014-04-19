@@ -62,6 +62,7 @@ private slots:
     void authentication(QNetworkReply* reply, QAuthenticator *auth);
 private:
     QUrl createBaseURL() const;
+    QUrl createURL(const QString &path) const;
 private:
     ConnectionType m_connectionType;
     QString m_hostname;
