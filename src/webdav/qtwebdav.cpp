@@ -161,6 +161,16 @@ QNetworkReply *QtWebDav::getFreeSpace()
     return sendCustomRequest(request, "PROPFIND", data);
 }
 
+// Depth == -1 => Depth == infinity
+QNetworkReply *QtWebDav::list(const QString &path, int depth)
+{
+    QNetworkRequest request(createURL(path));
+    request.setRawHeader("Depth",
+            ((depth == -1) ? QString("infinity").toUtf8() : QString::number(depth).toUtf8()));
+
+    return sendCustomRequest(request, "PROPFIND", QByteArray());
+}
+
 QNetworkReply *QtWebDav::sendCustomRequest(const QNetworkRequest &request,
         const QByteArray &verb, const QByteArray &data)
 {
@@ -215,6 +225,15 @@ QUrl QtWebDav::createBaseURL() const
 QUrl QtWebDav::createURL(const QString &path) const
 {
     QUrl url(createBaseURL());
-    url.setPath(m_rootPath + path);
+
+    if (path.startsWith("/"))
+    {
+        url.setPath(m_rootPath + path.mid(1));
+    }
+    else
+    {
+        url.setPath(m_rootPath + path);
+    }
+
     return url;
 }

@@ -53,6 +53,7 @@ public:
     QNetworkReply *get(const QString &path, QIODevice *data = 0);
 
     QNetworkReply *getFreeSpace();
+    QNetworkReply *list(const QString &path, int depth = 1);
 
     QNetworkReply *sendCustomRequest(const QNetworkRequest &request, const QByteArray &verb, const QByteArray &data);
 signals:
