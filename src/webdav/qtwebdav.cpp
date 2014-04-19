@@ -16,6 +16,7 @@
 #include "qtwebdav.h"
 #include <QNetworkReply>
 #include <QAuthenticator>
+#include <QBuffer>
 #include <QDebug>
 
 // QNetworkReply::read() -> QIODevice::write()
@@ -101,14 +102,14 @@ QNetworkReply *QtWebDav::mkdir(const QString &path)
 {
     QUrl reqURL(createBaseURL());
     reqURL.setPath(m_rootPath + path);
-    return sendCustomRequest(QNetworkRequest(reqURL), "MKCOL");
+    return QNetworkAccessManager::sendCustomRequest(QNetworkRequest(reqURL), "MKCOL");
 }
 
 QNetworkReply *QtWebDav::remove(const QString &path)
 {
     QUrl reqURL(createBaseURL());
     reqURL.setPath(m_rootPath + path);
-    return sendCustomRequest(QNetworkRequest(reqURL), "DELETE");
+    return QNetworkAccessManager::sendCustomRequest(QNetworkRequest(reqURL), "DELETE");
 }
 
 QNetworkReply *QtWebDav::copy(const QString &from, const QString &to, bool overwrite)
@@ -124,7 +125,7 @@ QNetworkReply *QtWebDav::copy(const QString &from, const QString &to, bool overw
     request.setRawHeader("Depth", "infinity");
     request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
 
-    return sendCustomRequest(request, "COPY");
+    return QNetworkAccessManager::sendCustomRequest(request, "COPY");
 }
 
 QNetworkReply *QtWebDav::move(const QString &from, const QString &to, bool overwrite)
@@ -140,7 +141,7 @@ QNetworkReply *QtWebDav::move(const QString &from, const QString &to, bool overw
     request.setRawHeader("Depth", "infinity");
     request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
 
-    return sendCustomRequest(request, "MOVE");
+    return QNetworkAccessManager::sendCustomRequest(request, "MOVE");
 }
 
 QNetworkReply *QtWebDav::put(const QString &path, QIODevice *data)
@@ -160,6 +161,38 @@ QNetworkReply *QtWebDav::get(const QString &path, QIODevice *data)
 
     QNetworkReply *reply = QNetworkAccessManager::get(QNetworkRequest(reqURL));
     new QtNetworkReplyProxy(reply, data, this);
+
+    return reply;
+}
+
+QNetworkReply *QtWebDav::getFreeSpace()
+{
+    QUrl reqURL(createBaseURL());
+    reqURL.setPath(m_rootPath);
+
+    QNetworkRequest request(reqURL);
+    request.setRawHeader("Depth", "0");
+
+    QByteArray data =
+            "<D:propfind xmlns:D=\"DAV:\">  "
+            "  <D:prop>                     "
+            "    <D:quota-available-bytes/> "
+            "    <D:quota-used-bytes/>      "
+            "  </D:prop>                    "
+            "</D:propfind>                  ";
+
+    return sendCustomRequest(request, "PROPFIND", data);
+}
+
+QNetworkReply *QtWebDav::sendCustomRequest(const QNetworkRequest &request,
+        const QByteArray &verb, const QByteArray &data)
+{
+    QBuffer *buffer = new QBuffer(this);
+    buffer->setData(data);
+    buffer->open(QIODevice::ReadOnly);
+
+    QNetworkReply *reply = QNetworkAccessManager::sendCustomRequest(request, verb, buffer);
+    connect(reply, SIGNAL(finished()), buffer, SLOT(deleteLater()));
 
     return reply;
 }

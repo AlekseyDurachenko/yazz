@@ -51,6 +51,10 @@ public:
 
     QNetworkReply *put(const QString &path, QIODevice *data = 0);
     QNetworkReply *get(const QString &path, QIODevice *data = 0);
+
+    QNetworkReply *getFreeSpace();
+
+    QNetworkReply *sendCustomRequest(const QNetworkRequest &request, const QByteArray &verb, const QByteArray &data);
 signals:
     void authFailed();
 public slots:
