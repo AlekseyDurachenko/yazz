@@ -15,8 +15,10 @@
 #ifndef CTEST_H
 #define CTEST_H
 
+#include "webdav/qtwebdav.h"
 #include <QObject>
 #include <QNetworkReply>
+#include <QFile>
 
 class CTest : public QObject
 {
@@ -24,11 +26,16 @@ class CTest : public QObject
 public:
     explicit CTest(QObject *parent = 0);
 signals:
-public slots:
 private slots:
+    void next();
     void finished();
 private:
     QNetworkReply *m_reply;
+    QtWebDav *m_webdav;
+    QFile *m_dataI;
+    QFile *m_dataO;
+    QString m_operation;
+    int m_n;
 };
 
 #endif // CTEST_H

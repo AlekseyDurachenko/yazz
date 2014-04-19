@@ -85,7 +85,14 @@ void QtWebDav::setHostname(const QString &hostname, int port)
 
 void QtWebDav::setRootPath(const QString &rootPath)
 {
-    m_rootPath = rootPath;
+    if (rootPath.isEmpty())
+    {
+        m_rootPath = "/";
+    }
+    else
+    {
+        m_rootPath = rootPath;
+    }
 }
 
 void QtWebDav::setUsername(const QString &username)
