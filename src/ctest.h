@@ -16,6 +16,7 @@
 #define CTEST_H
 
 #include "webdav/qtwebdav.h"
+#include "webdav/qtabstractwebdavreply.h"
 #include <QObject>
 #include <QNetworkReply>
 #include <QFile>
@@ -31,6 +32,7 @@ private slots:
     void finished();
 private:
     QNetworkReply *m_reply;
+    QtAbstractWebDavReply *m_davReply;
     QtWebDav *m_webdav;
     QFile *m_dataI;
     QFile *m_dataO;

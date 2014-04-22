@@ -37,11 +37,15 @@ HEADERS        +=                                           \
     src/ctest.h                                             \
     src/global.h                                            \
     src/consts.h                                            \
+    src/webdav/qtabstractwebdavreply.h \
+    src/webdav/qtmakedirwebdavreply.h
 
 SOURCES        +=                                           \
     src/webdav/qtwebdav.cpp                                 \
     src/caboutdialog.cpp                                    \
     src/ctest.cpp                                           \
+    src/webdav/qtabstractwebdavreply.cpp \
+    src/webdav/qtmakedirwebdavreply.cpp
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \
