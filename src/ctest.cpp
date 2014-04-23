@@ -15,6 +15,7 @@
 #include "ctest.h"
 #include "webdav/qtmakedirwebdavreply.h"
 #include "webdav/qtremovewebdavreply.h"
+#include "webdav/qtcopywebdavreply.h"
 #include <QApplication>
 #include <QFile>
 #include <QDir>
@@ -70,7 +71,7 @@ void CTest::next()
         m_operation = "Create directory";
         break;
     case 3:
-        m_reply = m_webdav->copy("people", "people2");
+        m_davReply = m_webdav->copy("people", "people2");
         m_operation = "Copy directory";
         break;
     case 4:
@@ -107,7 +108,7 @@ void CTest::next()
 
 void CTest::finished()
 {
-    if (m_n != 3 && m_n != 5)
+    if (m_n != 3 && m_n != 4 && m_n != 5)
     {
         qDebug() << "Operation  : " << m_operation;
         qDebug() << "---------------------------------------";

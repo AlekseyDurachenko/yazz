@@ -40,6 +40,7 @@ HEADERS        +=                                           \
     src/ctest.h                                             \
     src/global.h                                            \
     src/consts.h                                            \
+    src/webdav/qtcopywebdavreply.h
 
 SOURCES        +=                                           \
     src/webdav/qtwebdav.cpp                                 \
@@ -48,6 +49,7 @@ SOURCES        +=                                           \
     src/webdav/qtremovewebdavreply.cpp                      \
     src/caboutdialog.cpp                                    \
     src/ctest.cpp                                           \
+    src/webdav/qtcopywebdavreply.cpp
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \

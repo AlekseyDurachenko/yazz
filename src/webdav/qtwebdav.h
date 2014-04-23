@@ -20,6 +20,7 @@
 #include <QUrl>
 class QtMakeDirWebDavReply;
 class QtRemoveWebDavReply;
+class QtCopyWebDavReply;
 
 class QtWebDav : public QNetworkAccessManager
 {
@@ -48,7 +49,7 @@ public:
 
     QtMakeDirWebDavReply *mkdir(const QString &path);
     QtRemoveWebDavReply *remove(const QString &path);
-    QNetworkReply *copy(const QString &from, const QString &to, bool overwrite = true);
+    QtCopyWebDavReply *copy(const QString &from, const QString &to, bool overwrite = true);
     QNetworkReply *move(const QString &from, const QString &to, bool overwrite = true);
 
     QNetworkReply *put(const QString &path, QIODevice *data = 0);
