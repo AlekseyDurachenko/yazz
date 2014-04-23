@@ -19,6 +19,7 @@
 #include "webdav/qtmovewebdavreply.h"
 #include "webdav/qtputwebdavreply.h"
 #include "webdav/qtgetwebdavreply.h"
+#include "webdav/qtgetfreespacewebdavreply.h"
 #include <QApplication>
 #include <QFile>
 #include <QDir>
@@ -62,7 +63,7 @@ void CTest::next()
     switch (m_n++)
     {
     case 0:
-        m_reply = m_webdav->getFreeSpace();
+        m_davReply = m_webdav->getFreeSpace();
         m_operation = "Get free space";
         break;
     case 1:
@@ -111,7 +112,7 @@ void CTest::next()
 
 void CTest::finished()
 {
-    if (m_n != 3 && m_n != 4 && m_n != 5 && m_n != 6 && m_n != 7 && m_n != 8)
+    if (m_n != 3 && m_n != 4 && m_n != 5 && m_n != 6 && m_n != 7 && m_n != 8 && m_n != 1)
     {
         qDebug() << "Operation  : " << m_operation;
         qDebug() << "---------------------------------------";

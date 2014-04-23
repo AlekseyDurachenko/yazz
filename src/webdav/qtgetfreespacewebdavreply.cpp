@@ -13,34 +13,9 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-#ifndef QTABSTRACTWEBDAVREPLY_H
-#define QTABSTRACTWEBDAVREPLY_H
+#include "qtgetfreespacewebdavreply.h"
 
-#include <QNetworkReply>
-
-class QtAbstractWebDavReply : public QObject
+QtGetFreeSpaceWebDavReply::QtGetFreeSpaceWebDavReply(QNetworkReply *reply,
+        QObject *parent) : QtAbstractWebDavReply(GetFreeSpace, reply, parent)
 {
-    Q_OBJECT
-public:
-    enum Operation { MakeDir, Remove, Copy, Move, Put, Get, GetFreeSpace };
-    explicit QtAbstractWebDavReply(Operation operation, QNetworkReply *reply, QObject *parent = 0);
-    inline Operation operation() const;
-    inline QNetworkReply *reply() const;
-signals:
-    void finished();
-private:
-    Operation m_operation;
-    QNetworkReply *m_reply;
-};
-
-QtAbstractWebDavReply::Operation QtAbstractWebDavReply::operation() const
-{
-    return m_operation;
 }
-
-QNetworkReply *QtAbstractWebDavReply::reply() const
-{
-    return m_reply;
-}
-
-#endif // QTABSTRACTWEBDAVREPLY_H
