@@ -65,7 +65,7 @@ signals:
 public slots:
 private slots:
     void authentication(QNetworkReply* reply, QAuthenticator *auth);
-private:
+protected:
     QUrl createBaseURL() const;
     QUrl createURL(const QString &path) const;
 private:
