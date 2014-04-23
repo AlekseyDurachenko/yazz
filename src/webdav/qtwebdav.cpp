@@ -133,7 +133,8 @@ QtCopyWebDavReply *QtWebDav::copy(const QString &from,
     request.setRawHeader("Depth", "infinity");
     request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
 
-    return new QtCopyWebDavReply(QNetworkAccessManager::sendCustomRequest(request, "COPY"), this);
+    return new QtCopyWebDavReply(QNetworkAccessManager::sendCustomRequest
+            (request, "COPY"), this);
 }
 
 QtMoveWebDavReply *QtWebDav::move(const QString &from,
@@ -144,7 +145,8 @@ QtMoveWebDavReply *QtWebDav::move(const QString &from,
     request.setRawHeader("Depth", "infinity");
     request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
 
-    return new QtMoveWebDavReply(QNetworkAccessManager::sendCustomRequest(request, "MOVE"), this);
+    return new QtMoveWebDavReply(QNetworkAccessManager::sendCustomRequest
+            (request, "MOVE"), this);
 }
 
 QtPutWebDavReply *QtWebDav::put(const QString &path, QIODevice *data)
@@ -175,7 +177,8 @@ QtGetFreeSpaceWebDavReply *QtWebDav::getFreeSpace()
             "  </D:prop>                    "
             "</D:propfind>                  ";
 
-    return new QtGetFreeSpaceWebDavReply(sendCustomRequest(request, "PROPFIND", data), this);
+    return new QtGetFreeSpaceWebDavReply(sendCustomRequest
+            (request, "PROPFIND", data), this);
 }
 
 // Depth == -1 => Depth == infinity (i have no idea, where should it works)
@@ -183,7 +186,8 @@ QtListWebDavReply *QtWebDav::list(const QString &path, int depth)
 {
     QNetworkRequest request(createURL(path));
     request.setRawHeader("Depth",
-            ((depth == -1) ? QString("infinity").toUtf8() : QString::number(depth).toUtf8()));
+            ((depth == -1) ? QString("infinity").toUtf8() :
+                             QString::number(depth).toUtf8()));
 
     QByteArray data =
             "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
@@ -197,7 +201,8 @@ QtListWebDavReply *QtWebDav::list(const QString &path, int depth)
             "  </D:prop>                    "
             "</D:propfind>                  ";
 
-    return new QtListWebDavReply(sendCustomRequest(request, "PROPFIND", data), this);
+    return new QtListWebDavReply(sendCustomRequest
+            (request, "PROPFIND", data), this);
 }
 
 QNetworkReply *QtWebDav::sendCustomRequest(const QNetworkRequest &request,
