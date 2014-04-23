@@ -17,6 +17,7 @@
 #include "qtmakedirwebdavreply.h"
 #include "qtremovewebdavreply.h"
 #include "qtcopywebdavreply.h"
+#include "qtmovewebdavreply.h"
 #include <QNetworkReply>
 #include <QAuthenticator>
 #include <QBuffer>
@@ -131,7 +132,7 @@ QtCopyWebDavReply *QtWebDav::copy(const QString &from,
     return new QtCopyWebDavReply(QNetworkAccessManager::sendCustomRequest(request, "COPY"), this);
 }
 
-QNetworkReply *QtWebDav::move(const QString &from,
+QtMoveWebDavReply *QtWebDav::move(const QString &from,
         const QString &to, bool overwrite)
 {
     QNetworkRequest request(createURL(from));
@@ -139,7 +140,7 @@ QNetworkReply *QtWebDav::move(const QString &from,
     request.setRawHeader("Depth", "infinity");
     request.setRawHeader("Overwrite", ((overwrite) ? ("T") : ("F")));
 
-    return QNetworkAccessManager::sendCustomRequest(request, "MOVE");
+    return new QtMoveWebDavReply(QNetworkAccessManager::sendCustomRequest(request, "MOVE"), this);
 }
 
 QNetworkReply *QtWebDav::put(const QString &path, QIODevice *data)

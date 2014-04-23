@@ -16,6 +16,7 @@
 #include "webdav/qtmakedirwebdavreply.h"
 #include "webdav/qtremovewebdavreply.h"
 #include "webdav/qtcopywebdavreply.h"
+#include "webdav/qtmovewebdavreply.h"
 #include <QApplication>
 #include <QFile>
 #include <QDir>
@@ -79,7 +80,7 @@ void CTest::next()
         m_operation = "Remove directory";
         break;
     case 5:
-        m_reply = m_webdav->move("people2", "new_people");
+        m_davReply = m_webdav->move("people2", "new_people");
         m_operation = "Move directory";
         break;
     case 6:
@@ -108,7 +109,7 @@ void CTest::next()
 
 void CTest::finished()
 {
-    if (m_n != 3 && m_n != 4 && m_n != 5)
+    if (m_n != 3 && m_n != 4 && m_n != 5 && m_n != 6)
     {
         qDebug() << "Operation  : " << m_operation;
         qDebug() << "---------------------------------------";

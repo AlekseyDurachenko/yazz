@@ -36,20 +36,22 @@ HEADERS        +=                                           \
     src/webdav/qtabstractwebdavreply.h                      \
     src/webdav/qtmakedirwebdavreply.h                       \
     src/webdav/qtremovewebdavreply.h                        \
+    src/webdav/qtcopywebdavreply.h                          \
+    src/webdav/qtmovewebdavreply.h                          \
     src/caboutdialog.h                                      \
     src/ctest.h                                             \
     src/global.h                                            \
     src/consts.h                                            \
-    src/webdav/qtcopywebdavreply.h
 
 SOURCES        +=                                           \
     src/webdav/qtwebdav.cpp                                 \
     src/webdav/qtabstractwebdavreply.cpp                    \
     src/webdav/qtmakedirwebdavreply.cpp                     \
     src/webdav/qtremovewebdavreply.cpp                      \
+    src/webdav/qtcopywebdavreply.cpp                        \
+    src/webdav/qtmovewebdavreply.cpp                        \
     src/caboutdialog.cpp                                    \
     src/ctest.cpp                                           \
-    src/webdav/qtcopywebdavreply.cpp
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \
