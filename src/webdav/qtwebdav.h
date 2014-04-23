@@ -22,6 +22,7 @@ class QtMakeDirWebDavReply;
 class QtRemoveWebDavReply;
 class QtCopyWebDavReply;
 class QtMoveWebDavReply;
+class QtPutWebDavReply;
 
 class QtWebDav : public QNetworkAccessManager
 {
@@ -53,7 +54,7 @@ public:
     QtCopyWebDavReply *copy(const QString &from, const QString &to, bool overwrite = true);
     QtMoveWebDavReply *move(const QString &from, const QString &to, bool overwrite = true);
 
-    QNetworkReply *put(const QString &path, QIODevice *data = 0);
+    QtPutWebDavReply *put(const QString &path, QIODevice *data = 0);
     QNetworkReply *get(const QString &path, QIODevice *data = 0);
 
     QNetworkReply *getFreeSpace();
