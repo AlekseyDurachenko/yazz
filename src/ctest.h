@@ -31,7 +31,6 @@ private slots:
     void next();
     void finished();
 private:
-    QNetworkReply *m_reply;
     QtAbstractWebDavReply *m_davReply;
     QtWebDav *m_webdav;
     QFile *m_dataI;

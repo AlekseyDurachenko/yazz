@@ -20,13 +20,14 @@
 #include "webdav/qtputwebdavreply.h"
 #include "webdav/qtgetwebdavreply.h"
 #include "webdav/qtgetfreespacewebdavreply.h"
+#include "webdav/qtlistwebdavreply.h"
 #include <QApplication>
 #include <QFile>
 #include <QDir>
 #include <QDebug>
 
 CTest::CTest(QObject *parent) :
-        QObject(parent), m_reply(0), m_davReply(0),  m_n(0)
+        QObject(parent), m_davReply(0),  m_n(0)
 {
     QFile settings(QDir::homePath() + QDir::separator() + "test.conf");
     Q_ASSERT(settings.open(QIODevice::ReadOnly));
@@ -67,7 +68,7 @@ void CTest::next()
         m_operation = "Get free space";
         break;
     case 1:
-        m_reply = m_webdav->list("/", 1);
+        m_davReply = m_webdav->list("/", 1);
         m_operation = "Get list";
         break;
     case 2:
@@ -98,11 +99,6 @@ void CTest::next()
         qApp->quit();
     }
 
-    if (m_reply)
-    {
-        connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
-        connect(m_reply, SIGNAL(finished()), m_reply, SLOT(deleteLater()));
-    }
     if (m_davReply)
     {
         connect(m_davReply, SIGNAL(finished()), this, SLOT(finished()));
@@ -112,30 +108,15 @@ void CTest::next()
 
 void CTest::finished()
 {
-    if (m_n != 3 && m_n != 4 && m_n != 5 && m_n != 6 && m_n != 7 && m_n != 8 && m_n != 1)
-    {
-        qDebug() << "Operation  : " << m_operation;
-        qDebug() << "---------------------------------------";
-        qDebug() << "Error      : " << m_reply->error() << m_reply->errorString();
-        qDebug() << "Status Code: " << m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        qDebug() << "Phase attr : " << m_reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toByteArray();
-        qDebug() << "---------------------------------------";
-        qDebug() << m_reply->readAll();
-        qDebug() << "---------------------------------------";
-    }
-    else
-    {
-        qDebug() << "Operation  : " << m_operation;
-        qDebug() << "---------------------------------------";
-        qDebug() << "Error      : " << m_davReply->reply()->error() << m_davReply->reply()->errorString();
-        qDebug() << "Status Code: " << m_davReply->reply()->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        qDebug() << "Phase attr : " << m_davReply->reply()->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toByteArray();
-        qDebug() << "---------------------------------------";
-        qDebug() << m_davReply->reply()->readAll();
-        qDebug() << "---------------------------------------";
-    }
+    qDebug() << "Operation  : " << m_operation;
+    qDebug() << "---------------------------------------";
+    qDebug() << "Error      : " << m_davReply->reply()->error() << m_davReply->reply()->errorString();
+    qDebug() << "Status Code: " << m_davReply->reply()->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    qDebug() << "Phase attr : " << m_davReply->reply()->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toByteArray();
+    qDebug() << "---------------------------------------";
+    qDebug() << m_davReply->reply()->readAll();
+    qDebug() << "---------------------------------------";
 
-    m_reply = 0;
     m_davReply = 0;
 
     QMetaObject::invokeMethod(this, "next", Qt::QueuedConnection);

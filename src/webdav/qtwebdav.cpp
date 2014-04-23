@@ -21,6 +21,7 @@
 #include "qtputwebdavreply.h"
 #include "qtgetwebdavreply.h"
 #include "qtgetfreespacewebdavreply.h"
+#include "qtlistwebdavreply.h"
 #include <QNetworkReply>
 #include <QAuthenticator>
 #include <QBuffer>
@@ -177,8 +178,8 @@ QtGetFreeSpaceWebDavReply *QtWebDav::getFreeSpace()
     return new QtGetFreeSpaceWebDavReply(sendCustomRequest(request, "PROPFIND", data), this);
 }
 
-// Depth == -1 => Depth == infinity
-QNetworkReply *QtWebDav::list(const QString &path, int depth)
+// Depth == -1 => Depth == infinity (i have no idea, where should it works)
+QtListWebDavReply *QtWebDav::list(const QString &path, int depth)
 {
     QNetworkRequest request(createURL(path));
     request.setRawHeader("Depth",
@@ -196,7 +197,7 @@ QNetworkReply *QtWebDav::list(const QString &path, int depth)
             "  </D:prop>                    "
             "</D:propfind>                  ";
 
-    return sendCustomRequest(request, "PROPFIND", data);
+    return new QtListWebDavReply(sendCustomRequest(request, "PROPFIND", data), this);
 }
 
 QNetworkReply *QtWebDav::sendCustomRequest(const QNetworkRequest &request,
