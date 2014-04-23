@@ -19,6 +19,7 @@
 #include "qtcopywebdavreply.h"
 #include "qtmovewebdavreply.h"
 #include "qtputwebdavreply.h"
+#include "qtgetwebdavreply.h"
 #include <QNetworkReply>
 #include <QAuthenticator>
 #include <QBuffer>
@@ -152,11 +153,11 @@ QtPutWebDavReply *QtWebDav::put(const QString &path, QIODevice *data)
     return new QtPutWebDavReply(QNetworkAccessManager::put(request, data), this);
 }
 
-QNetworkReply *QtWebDav::get(const QString &path, QIODevice *data)
+QtGetWebDavReply *QtWebDav::get(const QString &path, QIODevice *data)
 {
     QNetworkReply *reply = QNetworkAccessManager::get(QNetworkRequest(createURL(path)));
     new QtNetworkReplyProxy(reply, data, this);    
-    return reply;
+    return new QtGetWebDavReply(reply, this);
 }
 
 QNetworkReply *QtWebDav::getFreeSpace()

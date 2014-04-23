@@ -23,6 +23,7 @@ class QtRemoveWebDavReply;
 class QtCopyWebDavReply;
 class QtMoveWebDavReply;
 class QtPutWebDavReply;
+class QtGetWebDavReply;
 
 class QtWebDav : public QNetworkAccessManager
 {
@@ -55,7 +56,7 @@ public:
     QtMoveWebDavReply *move(const QString &from, const QString &to, bool overwrite = true);
 
     QtPutWebDavReply *put(const QString &path, QIODevice *data = 0);
-    QNetworkReply *get(const QString &path, QIODevice *data = 0);
+    QtGetWebDavReply *get(const QString &path, QIODevice *data = 0);
 
     QNetworkReply *getFreeSpace();
     QNetworkReply *list(const QString &path, int depth = 1);

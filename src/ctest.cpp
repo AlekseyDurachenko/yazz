@@ -18,6 +18,7 @@
 #include "webdav/qtcopywebdavreply.h"
 #include "webdav/qtmovewebdavreply.h"
 #include "webdav/qtputwebdavreply.h"
+#include "webdav/qtgetwebdavreply.h"
 #include <QApplication>
 #include <QFile>
 #include <QDir>
@@ -89,7 +90,7 @@ void CTest::next()
         m_operation = "Put file";
         break;
     case 7:
-        m_reply = m_webdav->get("new_people/file.jpg", m_dataO);
+        m_davReply = m_webdav->get("new_people/file.jpg", m_dataO);
         m_operation = "Get file";
         break;
     default:
@@ -110,7 +111,7 @@ void CTest::next()
 
 void CTest::finished()
 {
-    if (m_n != 3 && m_n != 4 && m_n != 5 && m_n != 6 && m_n != 7)
+    if (m_n != 3 && m_n != 4 && m_n != 5 && m_n != 6 && m_n != 7 && m_n != 8)
     {
         qDebug() << "Operation  : " << m_operation;
         qDebug() << "---------------------------------------";
