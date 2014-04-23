@@ -15,6 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 #include "qtwebdav.h"
 #include "qtmakedirwebdavreply.h"
+#include "qtremovewebdavreply.h"
 #include <QNetworkReply>
 #include <QAuthenticator>
 #include <QBuffer>
@@ -112,9 +113,10 @@ QtMakeDirWebDavReply *QtWebDav::mkdir(const QString &path)
             (QNetworkRequest(createURL(path)), "MKCOL"), this);
 }
 
-QNetworkReply *QtWebDav::remove(const QString &path)
+QtRemoveWebDavReply *QtWebDav::remove(const QString &path)
 {
-    return QNetworkAccessManager::sendCustomRequest(QNetworkRequest(createURL(path)), "DELETE");
+    return new QtRemoveWebDavReply(QNetworkAccessManager::sendCustomRequest
+            (QNetworkRequest(createURL(path)), "DELETE"), this);
 }
 
 QNetworkReply *QtWebDav::copy(const QString &from,

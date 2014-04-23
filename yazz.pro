@@ -33,19 +33,21 @@ INCLUDEPATH    +=                                           \
 
 HEADERS        +=                                           \
     src/webdav/qtwebdav.h                                   \
+    src/webdav/qtabstractwebdavreply.h                      \
+    src/webdav/qtmakedirwebdavreply.h                       \
+    src/webdav/qtremovewebdavreply.h                        \
     src/caboutdialog.h                                      \
     src/ctest.h                                             \
     src/global.h                                            \
     src/consts.h                                            \
-    src/webdav/qtabstractwebdavreply.h \
-    src/webdav/qtmakedirwebdavreply.h
 
 SOURCES        +=                                           \
     src/webdav/qtwebdav.cpp                                 \
+    src/webdav/qtabstractwebdavreply.cpp                    \
+    src/webdav/qtmakedirwebdavreply.cpp                     \
+    src/webdav/qtremovewebdavreply.cpp                      \
     src/caboutdialog.cpp                                    \
     src/ctest.cpp                                           \
-    src/webdav/qtabstractwebdavreply.cpp \
-    src/webdav/qtmakedirwebdavreply.cpp
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \

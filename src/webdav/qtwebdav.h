@@ -19,6 +19,7 @@
 #include <QNetworkAccessManager>
 #include <QUrl>
 class QtMakeDirWebDavReply;
+class QtRemoveWebDavReply;
 
 class QtWebDav : public QNetworkAccessManager
 {
@@ -46,7 +47,7 @@ public:
     void setPassword(const QString &password);
 
     QtMakeDirWebDavReply *mkdir(const QString &path);
-    QNetworkReply *remove(const QString &path);
+    QtRemoveWebDavReply *remove(const QString &path);
     QNetworkReply *copy(const QString &from, const QString &to, bool overwrite = true);
     QNetworkReply *move(const QString &from, const QString &to, bool overwrite = true);
 

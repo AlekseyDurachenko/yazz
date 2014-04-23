@@ -14,6 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "ctest.h"
 #include "webdav/qtmakedirwebdavreply.h"
+#include "webdav/qtremovewebdavreply.h"
 #include <QApplication>
 #include <QFile>
 #include <QDir>
@@ -73,7 +74,7 @@ void CTest::next()
         m_operation = "Copy directory";
         break;
     case 4:
-        m_reply = m_webdav->remove("people");
+        m_davReply = m_webdav->remove("people");
         m_operation = "Remove directory";
         break;
     case 5:
@@ -106,7 +107,7 @@ void CTest::next()
 
 void CTest::finished()
 {
-    if (m_n != 3)
+    if (m_n != 3 && m_n != 5)
     {
         qDebug() << "Operation  : " << m_operation;
         qDebug() << "---------------------------------------";
