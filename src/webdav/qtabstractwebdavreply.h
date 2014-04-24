@@ -22,15 +22,26 @@ class QtAbstractWebDavReply : public QObject
 {
     Q_OBJECT
 public:
-    enum Operation { MakeDir, Remove, Copy, Move, Put, Get, GetFreeSpace, List };
+    enum Operation { MakeDir, Remove, Copy, Move, Put,
+            Get, GetFreeSpace, List };
+    enum Error { NoError = 0 };
     explicit QtAbstractWebDavReply(Operation operation, QNetworkReply *reply, QObject *parent = 0);
     inline Operation operation() const;
     inline QNetworkReply *reply() const;
+    inline Error error() const;
+    inline const QString &errorString() const;
 signals:
     void finished();
+private slots:
+    virtual void processFinished();
+protected:
+    void setError(Error error);
+    void setErrorString(const QString &str);
 private:
     Operation m_operation;
     QNetworkReply *m_reply;
+    Error m_error;
+    QString m_errorString;
 };
 
 QtAbstractWebDavReply::Operation QtAbstractWebDavReply::operation() const
@@ -41,6 +52,16 @@ QtAbstractWebDavReply::Operation QtAbstractWebDavReply::operation() const
 QNetworkReply *QtAbstractWebDavReply::reply() const
 {
     return m_reply;
+}
+
+QtAbstractWebDavReply::Error QtAbstractWebDavReply::error() const
+{
+    return m_error;
+}
+
+const QString &QtAbstractWebDavReply::errorString() const
+{
+    return m_errorString;
 }
 
 #endif // QTABSTRACTWEBDAVREPLY_H

@@ -15,9 +15,25 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 #include "qtabstractwebdavreply.h"
 
-QtAbstractWebDavReply::QtAbstractWebDavReply(Operation operation, QNetworkReply *reply, QObject *parent) :
-        QObject(parent), m_operation(operation), m_reply(reply)
+QtAbstractWebDavReply::QtAbstractWebDavReply(Operation operation,
+        QNetworkReply *reply, QObject *parent) : QObject(parent),
+        m_operation(operation), m_reply(reply), m_error(NoError)
 {
-    connect(reply, SIGNAL(finished()), this, SIGNAL(finished()));
+    connect(reply, SIGNAL(finished()), this, SLOT(processFinished()));
     connect(this, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+}
+
+void QtAbstractWebDavReply::processFinished()
+{
+    emit finished();
+}
+
+void QtAbstractWebDavReply::setError(QtAbstractWebDavReply::Error error)
+{
+    m_error = error;
+}
+
+void QtAbstractWebDavReply::setErrorString(const QString &str)
+{
+    m_errorString = str;
 }
