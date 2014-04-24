@@ -19,3 +19,7 @@ QtGetFreeSpaceWebDavReply::QtGetFreeSpaceWebDavReply(QNetworkReply *reply,
         QObject *parent) : QtAbstractWebDavReply(GetFreeSpace, reply, parent)
 {
 }
+
+void QtGetFreeSpaceWebDavReply::processReply()
+{
+}

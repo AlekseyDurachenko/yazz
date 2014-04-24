@@ -19,3 +19,7 @@ QtListWebDavReply::QtListWebDavReply(QNetworkReply *reply, QObject *parent) :
         QtAbstractWebDavReply(List, reply, parent)
 {
 }
+
+void QtListWebDavReply::processReply()
+{
+}

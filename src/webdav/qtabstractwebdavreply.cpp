@@ -19,11 +19,11 @@ QtAbstractWebDavReply::QtAbstractWebDavReply(Operation operation,
         QNetworkReply *reply, QObject *parent) : QObject(parent),
         m_operation(operation), m_reply(reply), m_error(NoError)
 {
-    connect(reply, SIGNAL(finished()), this, SLOT(processFinished()));
+    connect(reply, SIGNAL(finished()), this, SLOT(replyFinished()));
     connect(this, SIGNAL(destroyed()), this, SLOT(deleteLater()));
 }
 
-void QtAbstractWebDavReply::processFinished()
+void QtAbstractWebDavReply::replyFinished()
 {
     int code = m_reply->attribute
             (QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -79,6 +79,9 @@ void QtAbstractWebDavReply::processFinished()
         m_error = UnknowError;
     }
 
+    // before the finished we need to process the reply data (e.g. xml)
+    processReply();
+
     emit finished();
 }
 
@@ -90,4 +93,8 @@ void QtAbstractWebDavReply::setError(QtAbstractWebDavReply::Error error)
 void QtAbstractWebDavReply::setErrorString(const QString &str)
 {
     m_errorString = str;
+}
+
+void QtAbstractWebDavReply::processReply()
+{
 }

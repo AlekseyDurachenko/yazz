@@ -23,6 +23,8 @@ class QtListWebDavReply : public QtAbstractWebDavReply
     Q_OBJECT
 public:
     explicit QtListWebDavReply(QNetworkReply *reply, QObject *parent = 0);
+protected:
+    virtual void processReply();
 };
 
 

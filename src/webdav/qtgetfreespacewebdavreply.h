@@ -23,6 +23,8 @@ class QtGetFreeSpaceWebDavReply : public QtAbstractWebDavReply
     Q_OBJECT
 public:
     explicit QtGetFreeSpaceWebDavReply(QNetworkReply *reply, QObject *parent = 0);
+protected:
+    virtual void processReply();
 };
 
 

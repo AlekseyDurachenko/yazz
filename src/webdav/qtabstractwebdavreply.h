@@ -57,11 +57,12 @@ public:
     inline const QString &errorString() const;
 signals:
     void finished();
-protected slots:
-    virtual void processFinished();
+private slots:
+    void replyFinished();
 protected:
     void setError(Error error);
     void setErrorString(const QString &str);
+    virtual void processReply();
 private:
     Operation m_operation;
     QNetworkReply *m_reply;
