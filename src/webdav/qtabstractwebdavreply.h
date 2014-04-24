@@ -22,9 +22,34 @@ class QtAbstractWebDavReply : public QObject
 {
     Q_OBJECT
 public:
-    enum Operation { MakeDir, Remove, Copy, Move, Put,
-            Get, GetFreeSpace, List };
-    enum Error { NoError = 0 };
+    enum Operation
+    {
+        MakeDir,
+        Remove,
+        Copy,
+        Move,
+        Put,
+        Get,
+        GetFreeSpace,
+        List
+    };
+    enum Error
+    {
+        NoError = 0,
+        AccessDenied,
+        Forbidden,
+        MethodNotAllowed,
+        Conflict,
+        UnsupportedMediaType,
+        InsufficientStorage,
+        Locked,
+        NoContent,
+        PreconditionFailed,
+        NotFound,
+        BadGateway,
+        MultiStatus,
+        UnknowError
+    };
     explicit QtAbstractWebDavReply(Operation operation, QNetworkReply *reply, QObject *parent = 0);
     inline Operation operation() const;
     inline QNetworkReply *reply() const;
@@ -32,7 +57,7 @@ public:
     inline const QString &errorString() const;
 signals:
     void finished();
-private slots:
+protected slots:
     virtual void processFinished();
 protected:
     void setError(Error error);

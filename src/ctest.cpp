@@ -41,7 +41,7 @@ CTest::CTest(QObject *parent) :
     QString hostname = settings.readLine().trimmed();
     QString username = settings.readLine().trimmed();
     QString password = settings.readLine().trimmed();
-    QString rootpath = settings.readLine().trimmed();;
+    QString rootpath = settings.readLine().trimmed();
 
     qDebug() << "---------------------------------------";
     qDebug() << "Hostname: " << hostname;
@@ -108,14 +108,16 @@ void CTest::next()
 
 void CTest::finished()
 {
-    qDebug() << "Operation  : " << m_operation;
     qDebug() << "---------------------------------------";
-    qDebug() << "Error      : " << m_davReply->reply()->error() << m_davReply->reply()->errorString();
-    qDebug() << "Status Code: " << m_davReply->reply()->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    qDebug() << "Phase attr : " << m_davReply->reply()->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toByteArray();
+    qDebug() << "Operation      : " << m_operation;
+    qDebug() << "---------------------------------------";
+    qDebug() << "Error          : " << m_davReply->reply()->error() << m_davReply->reply()->errorString();
+    qDebug() << "Status Code    : " << m_davReply->reply()->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    qDebug() << "Phase attr     : " << m_davReply->reply()->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toByteArray();
+    qDebug() << "WebDav ErrCode : " << m_davReply->error();
+    qDebug() << "WebDav ErrStr  : " << m_davReply->errorString();
     qDebug() << "---------------------------------------";
     qDebug() << m_davReply->reply()->readAll();
-    qDebug() << "---------------------------------------";
 
     m_davReply = 0;
 

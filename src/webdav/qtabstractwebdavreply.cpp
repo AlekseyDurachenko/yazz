@@ -25,6 +25,60 @@ QtAbstractWebDavReply::QtAbstractWebDavReply(Operation operation,
 
 void QtAbstractWebDavReply::processFinished()
 {
+    int code = m_reply->attribute
+            (QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    m_errorString = m_reply->attribute
+            (QNetworkRequest::HttpReasonPhraseAttribute).toByteArray();
+
+    switch (code)
+    {
+    case 201:
+    case 200:
+        m_error = NoError;
+        break;
+    case 204:
+        if (m_operation != Remove)
+            m_error = NoError;
+        else
+            m_error = NoContent;
+        break;
+    case 207:
+        m_error = MultiStatus;
+        break;
+    case 401:
+        m_error = AccessDenied;
+        break;
+    case 403:
+        m_error = Forbidden;
+        break;
+    case 404:
+        m_error = NotFound;
+        break;
+    case 405:
+        m_error = MethodNotAllowed;
+        break;
+    case 409:
+        m_error = Conflict;
+        break;
+    case 412:
+        m_error = PreconditionFailed;
+        break;
+    case 415:
+        m_error = UnsupportedMediaType;
+        break;
+    case 423:
+        m_error = Locked;
+        break;
+    case 502:
+        m_error = BadGateway;
+        break;
+    case 507:
+        m_error = InsufficientStorage;
+        break;
+    default:
+        m_error = UnknowError;
+    }
+
     emit finished();
 }
 
