@@ -29,7 +29,7 @@
 CTest::CTest(QObject *parent) :
         QObject(parent), m_davReply(0),  m_n(0)
 {
-    QFile settings(QDir::homePath() + QDir::separator() + "test2.conf");
+    QFile settings(QDir::homePath() + QDir::separator() + "test.conf");
     Q_ASSERT(settings.open(QIODevice::ReadOnly));
 
     m_dataI = new QFile(QDir::homePath() + QDir::separator() + "in.jpg", this);
@@ -117,6 +117,16 @@ void CTest::finished()
     qDebug() << "WebDav ErrCode : " << m_davReply->error();
     qDebug() << "WebDav ErrStr  : " << m_davReply->errorString();
     qDebug() << "---------------------------------------";
+
+    // show custom information for some types of the operations
+    if (m_davReply->operation() == QtAbstractWebDavReply::GetFreeSpace)
+    {
+        QtGetFreeSpaceWebDavReply *custom = qobject_cast<QtGetFreeSpaceWebDavReply *>(m_davReply);
+        qDebug() << "Used bytes     : " << custom->usedBytes();
+        qDebug() << "Avaible bytes  : " << custom->avaibleBytes();
+        qDebug() << "---------------------------------------";
+    }
+
     qDebug() << m_davReply->reply()->readAll();
 
     m_davReply = 0;
