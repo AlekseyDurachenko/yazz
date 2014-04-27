@@ -19,3 +19,8 @@ QtMakeDirWebDavReply::QtMakeDirWebDavReply(QNetworkReply *reply, QObject *parent
         QtAbstractWebDavReply(MakeDir, reply, parent)
 {
 }
+
+void QtMakeDirWebDavReply::processReply()
+{
+
+}

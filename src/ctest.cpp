@@ -29,7 +29,7 @@
 CTest::CTest(QObject *parent) :
         QObject(parent), m_davReply(0),  m_n(0)
 {
-    QFile settings(QDir::homePath() + QDir::separator() + "test.conf");
+    QFile settings(QDir::homePath() + QDir::separator() + "test2.conf");
     Q_ASSERT(settings.open(QIODevice::ReadOnly));
 
     m_dataI = new QFile(QDir::homePath() + QDir::separator() + "in.jpg", this);

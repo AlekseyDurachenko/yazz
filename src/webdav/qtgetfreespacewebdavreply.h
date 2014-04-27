@@ -23,9 +23,24 @@ class QtGetFreeSpaceWebDavReply : public QtAbstractWebDavReply
     Q_OBJECT
 public:
     explicit QtGetFreeSpaceWebDavReply(QNetworkReply *reply, QObject *parent = 0);
+    inline qint64 usedBytes() const;
+    inline qint64 avaibleBytes() const;
 protected:
     virtual void processReply();
+private:
+    qint64 m_usedBytes;
+    qint64 m_avaibleBytes;
 };
+
+qint64 QtGetFreeSpaceWebDavReply::usedBytes() const
+{
+    return m_usedBytes;
+}
+
+qint64 QtGetFreeSpaceWebDavReply::avaibleBytes() const
+{
+    return m_avaibleBytes;
+}
 
 
 #endif // QTGETFREESPACEWEBDAVREPLY_H

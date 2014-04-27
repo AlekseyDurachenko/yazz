@@ -14,12 +14,48 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 #include "qtgetfreespacewebdavreply.h"
+#include <QtXml>
+#include <QDebug>
 
 QtGetFreeSpaceWebDavReply::QtGetFreeSpaceWebDavReply(QNetworkReply *reply,
         QObject *parent) : QtAbstractWebDavReply(GetFreeSpace, reply, parent)
 {
+    m_usedBytes = 0;
+    m_avaibleBytes = 0;
 }
 
 void QtGetFreeSpaceWebDavReply::processReply()
 {
+    if (error() == MultiStatus)
+    {
+        // TODO: This code is very simple parser. It must be changed
+        //       in the future
+        QXmlStreamReader xml (reply());
+        while (!xml.atEnd())
+        {
+            QXmlStreamReader::TokenType token = xml.readNext();
+
+            if (token == QXmlStreamReader::StartElement)
+            {
+                if (xml.name() == "quota-used-bytes")
+                {
+                    if (xml.readNext() == QXmlStreamReader::Characters)
+                    {
+                        m_usedBytes = xml.text().toString().toLongLong();
+                    }
+                }
+                else if (xml.name() == "quota-available-bytes")
+                {
+                    if (xml.readNext() == QXmlStreamReader::Characters)
+                    {
+                        m_avaibleBytes = xml.text().toString().toLongLong();
+                    }
+                }
+            }
+        }
+        if (xml.hasError())
+        {
+            qDebug() << "The xml reading error:" << xml.errorString();
+        }
+    }
 }
