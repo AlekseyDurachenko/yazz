@@ -24,14 +24,26 @@ class QtListWebDavReply : public QtAbstractWebDavReply
 {
     Q_OBJECT
 public:
-    explicit QtListWebDavReply(QNetworkReply *reply, QObject *parent = 0);
+    explicit QtListWebDavReply(const QString &path, QNetworkReply *reply, QObject *parent = 0);
+    inline const QString &path() const;
+    inline const QList<QtWebDavFileRecord> &fileList() const;
 protected:
     virtual void processReply();
 private:
     QtWebDavFileRecord parseResponse(const QDomNode &node);
 private:
     QList<QtWebDavFileRecord> m_fileList;
+    QString m_path;
 };
 
+const QString &QtListWebDavReply::path() const
+{
+    return m_path;
+}
+
+const QList<QtWebDavFileRecord> &QtListWebDavReply::fileList() const
+{
+    return m_fileList;
+}
 
 #endif // QTLISTWEBDAVREPLY_H

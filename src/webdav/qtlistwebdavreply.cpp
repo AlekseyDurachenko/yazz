@@ -16,9 +16,10 @@
 #include "qtlistwebdavreply.h"
 #include <QtXml>
 
-QtListWebDavReply::QtListWebDavReply(QNetworkReply *reply, QObject *parent) :
-        QtAbstractWebDavReply(List, reply, parent)
+QtListWebDavReply::QtListWebDavReply(const QString &path, QNetworkReply *reply,
+        QObject *parent) : QtAbstractWebDavReply(List, reply, parent)
 {
+    m_path = path;
 }
 
 void QtListWebDavReply::processReply()
@@ -110,8 +111,6 @@ QtWebDavFileRecord QtListWebDavReply::parseResponse(const QDomNode &response)
 
         node = node.nextSibling();
     }
-
-    qDebug() << fileRecord;
 
     return fileRecord;
 }

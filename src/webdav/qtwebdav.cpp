@@ -202,8 +202,8 @@ QtListWebDavReply *QtWebDav::list(const QString &path, int depth)
             "  </D:prop>                    "
             "</D:propfind>                  ";
 
-    return new QtListWebDavReply(sendCustomRequest
-            (request, "PROPFIND", data), this);
+    return new QtListWebDavReply
+            (path, sendCustomRequest(request, "PROPFIND", data), this);
 }
 
 QNetworkReply *QtWebDav::sendCustomRequest(const QNetworkRequest &request,
