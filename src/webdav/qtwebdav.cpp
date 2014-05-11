@@ -198,6 +198,7 @@ QtListWebDavReply *QtWebDav::list(const QString &path, int depth)
             "    <D:getcontentlength/>      "
             "    <D:resourcetype/>          "
             "    <D:displayname/>           "
+            "    <D:getetag/>               "
             "  </D:prop>                    "
             "</D:propfind>                  ";
 

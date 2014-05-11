@@ -17,6 +17,7 @@
 #define QTWEBDAVFILERECORD_H
 
 #include <QString>
+#include <QDateTime>
 #include <QDebug>
 
 class QtWebDavFileRecord
@@ -35,11 +36,23 @@ public:
 
     inline const QString &etag() const;
     void setEtag(const QString &etag);
+
+    inline qint64 contentLength() const;
+    void setContentLength(qint64 len);
+
+    inline const QDateTime &creationDateTime() const;
+    void setCreationDateTime(const QDateTime &dateTime);
+
+    inline const QDateTime &lastModifiedDateTime() const;
+    void setLastModifiedDateTime(const QDateTime &dateTime);
 private:
     QString m_href;
     QString m_displayName;
     QString m_etag;
+    qint64 m_contentLength;
     bool m_collectionFlag;
+    QDateTime m_creationDateTime;
+    QDateTime m_lastModifiedDateTime;
 };
 
 const QString &QtWebDavFileRecord::href() const
@@ -60,6 +73,21 @@ bool QtWebDavFileRecord::isCollection() const
 const QString &QtWebDavFileRecord::etag() const
 {
     return m_etag;
+}
+
+qint64 QtWebDavFileRecord::contentLength() const
+{
+    return m_contentLength;
+}
+
+const QDateTime &QtWebDavFileRecord::creationDateTime() const
+{
+    return m_creationDateTime;
+}
+
+const QDateTime &QtWebDavFileRecord::lastModifiedDateTime() const
+{
+    return m_lastModifiedDateTime;
 }
 
 QDebug operator << (QDebug dbg, const QtWebDavFileRecord &c);

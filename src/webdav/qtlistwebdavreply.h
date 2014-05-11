@@ -17,6 +17,8 @@
 #define QTLISTWEBDAVREPLY_H
 
 #include "qtabstractwebdavreply.h"
+#include "qtwebdavfilerecord.h"
+#include <QDomNode>
 
 class QtListWebDavReply : public QtAbstractWebDavReply
 {
@@ -25,6 +27,10 @@ public:
     explicit QtListWebDavReply(QNetworkReply *reply, QObject *parent = 0);
 protected:
     virtual void processReply();
+private:
+    QtWebDavFileRecord parseResponse(const QDomNode &node);
+private:
+    QList<QtWebDavFileRecord> m_fileList;
 };
 
 
