@@ -131,6 +131,7 @@ void CTest::finished()
         QtListWebDavReply *custom = qobject_cast<QtListWebDavReply *>(m_davReply);
         qDebug() << "PATH           : " << custom->path();
         qDebug() << "FILELIST       : " << custom->fileList();
+        qDebug() << "---------------------------------------";
     }
 
     qDebug() << m_davReply->reply()->readAll();
