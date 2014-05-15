@@ -54,7 +54,8 @@ HEADERS        +=                                           \
     src/global.h                                            \
     src/consts.h                                            \
     src/webdav/qtwebdavfilerecord.h \
-    src/browser/cwebdavitemmodel.h
+    src/browser/cwebdavitemmodel.h \
+    src/browser/cwebdavdatamodel.h
 
 SOURCES        +=                                           \
     src/webdav/qtwebdav.cpp                                 \
@@ -70,7 +71,8 @@ SOURCES        +=                                           \
     src/caboutdialog.cpp                                    \
     src/ctest.cpp                                           \
     src/webdav/qtwebdavfilerecord.cpp \
-    src/browser/cwebdavitemmodel.cpp
+    src/browser/cwebdavitemmodel.cpp \
+    src/browser/cwebdavdatamodel.cpp
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \
