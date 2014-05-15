@@ -18,18 +18,25 @@ TEMPLATE        = app
 CONFIG         += console debug_and_release
 QT             += core gui network xml
 
-DESTDIR         = bin
-OBJECTS_DIR     = build/release_obj
-MOC_DIR         = build/release_moc
-UI_DIR          = build/release_ui
-RCC_DIR         = build/release_rcc
+# Release build options
+release:DESTDIR     = bin
+release:OBJECTS_DIR = build/release/obj
+release:MOC_DIR     = build/release/moc
+release:RCC_DIR     = build/release/rcc
+release:UI_DIR      = build/release/ui
+# Debug build options
+debug:DESTDIR       = bin
+debug:OBJECTS_DIR   = build/debug/obj
+debug:MOC_DIR       = build/debug/moc
+debug:RCC_DIR       = build/debug/rcc
+debug:UI_DIR        = build/debug/ui
 
 DEFINES        +=                                           \
 
 INCLUDEPATH    +=                                           \
-
-INCLUDEPATH    +=                                           \
-    src                                                     \
+    $$PWD/src                                               \
+    $$PWD/src/browser                                       \
+    $$PWD/src/webdav                                        \
 
 HEADERS        +=                                           \
     src/webdav/qtwebdav.h                                   \
@@ -46,7 +53,8 @@ HEADERS        +=                                           \
     src/ctest.h                                             \
     src/global.h                                            \
     src/consts.h                                            \
-    src/webdav/qtwebdavfilerecord.h
+    src/webdav/qtwebdavfilerecord.h \
+    src/browser/cwebdavitemmodel.h
 
 SOURCES        +=                                           \
     src/webdav/qtwebdav.cpp                                 \
@@ -61,7 +69,8 @@ SOURCES        +=                                           \
     src/webdav/qtlistwebdavreply.cpp                        \
     src/caboutdialog.cpp                                    \
     src/ctest.cpp                                           \
-    src/webdav/qtwebdavfilerecord.cpp
+    src/webdav/qtwebdavfilerecord.cpp \
+    src/browser/cwebdavitemmodel.cpp
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \
@@ -94,12 +103,6 @@ win32 {
 
 # debug
 build_pass:CONFIG(debug, debug|release) {
-    TARGET      = $$join(TARGET,,,d)
-    OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
-    MOC_DIR     = $$join(MOC_DIR,,,d)
-    UI_DIR      = $$join(UI_DIR,,,d)
-    RCC_DIR     = $$join(RCC_DIR,,,d)
-
     win32 {
     }
 
