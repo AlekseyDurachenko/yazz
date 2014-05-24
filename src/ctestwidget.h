@@ -12,20 +12,27 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#include "cwebdavdatamodel.h"
+#ifndef CTESTWIDGET_H
+#define CTESTWIDGET_H
 
-CWebDavDataModel::CWebDavDataModel(QtWebDav *webdav, QObject *parent) :
-    QObject(parent), m_webdav(webdav)
-{
-    m_rootItem = new CWebDavDataItem(this, this);
+#include <QWidget>
+#include "qtwebdav.h"
+
+namespace Ui {
+class CTestWidget;
 }
 
-void CWebDavDataModel::itemRemove(CWebDavDataItem *parent, int start, int end)
+class CTestWidget : public QWidget
 {
-    emit itemRemoved(parent, start, end);
-}
+    Q_OBJECT
 
-void CWebDavDataModel::itemInsert(CWebDavDataItem *parent, int start, int end)
-{
-    emit itemInserted(parent, start, end);
-}
+public:
+    explicit CTestWidget(QWidget *parent = 0);
+    ~CTestWidget();
+
+private:
+    Ui::CTestWidget *ui;
+    QtWebDav *m_webdav;
+};
+
+#endif // CTESTWIDGET_H

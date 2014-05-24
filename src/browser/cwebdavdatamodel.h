@@ -15,13 +15,37 @@
 #ifndef CWEBDAVDATAMODEL_H
 #define CWEBDAVDATAMODEL_H
 
+#include "cwebdavdataitem.h"
+#include "qtwebdav.h"
 #include <QObject>
 
 class CWebDavDataModel : public QObject
 {
     Q_OBJECT
+    friend class CWebDavDataItem;
 public:
-    explicit CWebDavDataModel(QObject *parent = 0);
+    explicit CWebDavDataModel(QtWebDav *webdav, QObject *parent = 0);
+    inline QtWebDav *webdav() const;
+    inline CWebDavDataItem *rootItem() const;
+signals:
+    void itemInserted(CWebDavDataItem *parent, int start, int end);
+    void itemRemoved(CWebDavDataItem *parent, int start, int end);
+private:
+    void itemRemove(CWebDavDataItem *parent, int start, int end);
+    void itemInsert(CWebDavDataItem *parent, int start, int end);
+private:
+    QtWebDav *m_webdav;
+    CWebDavDataItem *m_rootItem;
 };
+
+QtWebDav *CWebDavDataModel::webdav() const
+{
+    return m_webdav;
+}
+
+CWebDavDataItem *CWebDavDataModel::rootItem() const
+{
+    return m_rootItem;
+}
 
 #endif // CWEBDAVDATAMODEL_H

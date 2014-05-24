@@ -25,6 +25,8 @@ class QtWebDavFileRecord
 public:
     QtWebDavFileRecord();
 
+    inline bool isNull() const;
+
     inline const QString &href() const;
     void setHref(const QString &href);
 
@@ -54,6 +56,11 @@ private:
     QDateTime m_creationDateTime;
     QDateTime m_lastModifiedDateTime;
 };
+
+bool QtWebDavFileRecord::isNull() const
+{
+    return m_href.isNull();
+}
 
 const QString &QtWebDavFileRecord::href() const
 {

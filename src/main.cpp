@@ -14,6 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "global.h"
 #include "ctest.h"
+#include "ctestwidget.h"
 #include <QApplication>
 #include <QDebug>
 
@@ -21,7 +22,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    CTest test;
+    //CTest test;
+    CTestWidget widget;
+    widget.show();
 
     return app.exec();
 }

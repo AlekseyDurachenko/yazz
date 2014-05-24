@@ -53,9 +53,11 @@ HEADERS        +=                                           \
     src/ctest.h                                             \
     src/global.h                                            \
     src/consts.h                                            \
-    src/webdav/qtwebdavfilerecord.h \
-    src/browser/cwebdavitemmodel.h \
-    src/browser/cwebdavdatamodel.h
+    src/webdav/qtwebdavfilerecord.h                         \
+    src/browser/cwebdavitemmodel.h                          \
+    src/browser/cwebdavdatamodel.h                          \
+    src/browser/cwebdavdataitem.h                           \
+    src/ctestwidget.h                                       \
 
 SOURCES        +=                                           \
     src/webdav/qtwebdav.cpp                                 \
@@ -70,12 +72,15 @@ SOURCES        +=                                           \
     src/webdav/qtlistwebdavreply.cpp                        \
     src/caboutdialog.cpp                                    \
     src/ctest.cpp                                           \
-    src/webdav/qtwebdavfilerecord.cpp \
-    src/browser/cwebdavitemmodel.cpp \
-    src/browser/cwebdavdatamodel.cpp
+    src/webdav/qtwebdavfilerecord.cpp                       \
+    src/browser/cwebdavitemmodel.cpp                        \
+    src/browser/cwebdavdatamodel.cpp                        \
+    src/browser/cwebdavdataitem.cpp                         \
+    src/ctestwidget.cpp                                     \
 
 FORMS          +=                                           \
     src/caboutdialog.ui                                     \
+    src/ctestwidget.ui                                      \
 
 RESOURCES      +=                                           \
     qrc/about.qrc                                           \

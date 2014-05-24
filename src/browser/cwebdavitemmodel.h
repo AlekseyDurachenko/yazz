@@ -15,14 +15,15 @@
 #ifndef CWEBDAVITEMMODEL_H
 #define CWEBDAVITEMMODEL_H
 
-#include "qtwebdav.h"
+#include "cwebdavdatamodel.h"
+#include <QFileIconProvider>
 #include <QAbstractItemModel>
 
 class CWebDavItemModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit CWebDavItemModel(QObject *parent = 0);
+    explicit CWebDavItemModel(CWebDavDataModel *dataModel, QObject *parent = 0);
 
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
@@ -30,6 +31,12 @@ public:
     QModelIndex parent(const QModelIndex &index) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;  
+private slots:
+    void itemRemoved(CWebDavDataItem *parent, int start, int end);
+    void itemInserted(CWebDavDataItem *parent, int start, int end);
+private:
+    CWebDavDataModel *m_dataModel;
+    QFileIconProvider m_iconProvider;
 };
 
 #endif // CWEBDAVITEMMODEL_H
